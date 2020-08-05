@@ -542,7 +542,7 @@ cv.smog <- function(x, y, g, v, label, type, family = "gaussian", lambda.max = N
                                          tid1=which(ty$time >= t)
                                          ti = NULL
                                          for(ti in 0:(length(tid0)-1)){
-                                           tloglike=tloglike-log(sum(ttheta[tid1])-ti/length(tid0)*sum(ttheta[tid0]))
+                                           tloglike = tloglike-log(sum(ttheta[tid1])-ti/length(tid0)*sum(ttheta[tid0]))
                                          }
                                        }
                                       }
