@@ -36,5 +36,5 @@ For the panel of three plots, the \code{xlab} is ``iterations'' and the
          \code{\link{smog.default}}, \code{\link{smog.formula}}, \code{\link{cv.smog}}.
 }
 \author{
-Chong Ma, \email{chong.ma@yale.edu}.
+Chong Ma, \email{chongma8903@gmail.com}.
 }

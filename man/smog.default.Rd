@@ -8,11 +8,10 @@ by using overlapped group penalty}
 \usage{
 \method{smog}{default}(x, y, g, v, label, lambda1, lambda2, lambda3,
   family = "gaussian", subset = NULL, rho = 10, scale = TRUE,
-  eabs = 0.001, erel = 0.001, LL = 1, eta = 1.25, maxitr = 1000,
-  ...)
+  eabs = 0.001, erel = 0.001, LL = 1, eta = 1.25, maxitr = 1000, ...)
 
-\method{smog}{formula}(formula, data = list(), g, v, label, lambda1,
-  lambda2, lambda3, ...)
+\method{smog}{formula}(formula, data = list(), g, v, label, lambda1, lambda2,
+  lambda3, ...)
 }
 \arguments{
 \item{x}{a model matrix, or a data frame of dimensions n by p, 
@@ -96,7 +95,7 @@ model to be fitted. Should not include the intercept.}
                              ``binomial", the fitted.values are the probabilies
                              for each class; when family is ``coxph'', 
                              the fitted.values are survival probabilities.}
-        \item{model}{a list of estimates for the intercept, clinical effects, 
+        \item{model}{a list of estimates for the intercept, treatment effect, 
                      and prognostic and predictive effects for the selectd
                      biomarkers.}
         \item{weight}{the weight of predictors resulted from the penalty funciton,
@@ -129,8 +128,8 @@ model to be fitted. Should not include the intercept.}
         \item{formula}{the formula supplied.}
 }
 \description{
-\code{smog} fits a linear non-penalized clinical (demographic) variables such as 
-age, gender, treatment, etc, and penalized phenotype biomarkers of prognostic effect (main effect)
+\code{smog} fits a linear non-penalized phynotype (demographic) variables such as 
+age, gender, treatment, etc, and penalized groups of prognostic effect (main effect)
 and predictive effect (interaction effect), by satisfying the hierarchy structure:
 if a predictive effect exists, its prognostic effect must be in the model. It can deal
 with continuous, binomial or multinomial, and survival response variables, underlying 
@@ -166,8 +165,7 @@ The formula has the form \code{response ~ 0 + terms} where \code{terms} is
          multipliers algorithm (ADMM). 
          
          Note that the missing values in the data are supposed to be dealt with in the 
-         data preprocessing, before applying the method. Not suggest using \code{smog.formula}
-         unless you know what you are doing!
+         data preprocessing, before applying the method.
 }
 \examples{
  
@@ -217,5 +215,5 @@ lfit3=smog(x,y3,g,v,label,lambda1=0.2,lambda2=0,lambda3=0.2,family = "coxph")
 \code{\link{cv.smog}}, \code{\link{predict.smog}}, \code{\link{plot.smog}}.
 }
 \author{
-Chong Ma, \email{chong.ma@yale.edu}.
+Chong Ma, \email{chongma8903@gmail.com}.
 }

@@ -4,8 +4,7 @@
 \alias{predict.smog}
 \title{predict method for objects of the class smog}
 \usage{
-\method{predict}{smog}(object, newdata = NULL, family = "gaussian",
-  ...)
+\method{predict}{smog}(object, newdata = NULL, family = "gaussian", ...)
 }
 \arguments{
 \item{object}{a fitted object of class inheriting from smog.}
@@ -43,5 +42,5 @@ If \code{newdata = NULL}, the fitted.value based on the \code{object}
 \code{\link{smog.default}}, \code{\link{smog.formula}}, \code{\link{cv.smog}}, \code{\link{plot.smog}}.
 }
 \author{
-Chong Ma, \email{chong.ma@yale.edu}.
+Chong Ma, \email{chongma8903@gmail.com}.
 }

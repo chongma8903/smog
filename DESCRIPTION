@@ -1,10 +1,10 @@
 Package: smog
 Type: Package
 Title: Structural Modeling by using Overlapped Group Penalty
-Version: 2.1.1
-Date: 2019-7-26
+Version: 2.0
+Date: 2019-12-15
 Author: Chong Ma, Kevin Galinsky
-Maintainer: Chong Ma <chong.ma@yale.edu>
+Maintainer: Chong Ma <chongma8903@gmail.com>
 Description: Fits a linear non-penalized phenotype (demographic) variables 
     and penalized groups of prognostic effect and predictive effect, by satisfying such
     hierarchy structures that if a predictive effect exists, its prognostic effect must 
@@ -19,10 +19,9 @@ Imports: Rcpp (>= 0.12.18),
          foreach,
          doParallel,
          tidyr,
-         dplyr,
          Rdpack (>= 0.11)
 RdMacros: Rdpack
 Suggests: survival,coxed
 LazyData: true
 LinkingTo: Rcpp, RcppArmadillo
-RoxygenNote: 6.1.1
+RoxygenNote: 6.0.1

@@ -4,9 +4,9 @@
 \alias{sim_rct_biomarker}
 \title{Simulate a randomized clinical trial with biomarkers}
 \usage{
-sim_rct_biomarker(n = 50, p = 100, p_prog = 5, p_pred = 5,
-  p_both = 5, v_trt = 0.4, v_prog = 0.2, v_pred = 0.2,
-  v_err = 0.2, corr = NULL, family = "gaussian", ...)
+sim_rct_biomarker(n = 50, p = 100, p_prog = 5, p_pred = 5, p_both = 5,
+  v_trt = 0.4, v_prog = 0.2, v_pred = 0.2, v_err = 0.2, corr = NULL,
+  family = "gaussian", ...)
 }
 \arguments{
 \item{n}{Number of subjects.}

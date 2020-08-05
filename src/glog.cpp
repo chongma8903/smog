@@ -18,7 +18,7 @@ using namespace arma;
 
 //' Generalized linear model constraint on hierarchical structure
 //' by using overlapped group penalty
-//'   
+//' 
 //' @param y response variable, in the format of matrix. When family is 
 //'          ``gaussian'' or ``binomial'', \code{y} ought to
 //'          be a matrix of n by 1 for the observations; when family
@@ -44,8 +44,6 @@ using namespace arma;
 //'               family is ``gaussian''; for multinomial or binary response
 //'               variable, family is ``binomial''; for survival response
 //'               variable, family is ``coxph'', respectively.
-//' @param subset an optional vector specifying a subset of observations to be
-//'               used in the model fitting. Default is \code{NULL}.
 //' @param rho the penalty parameter used in the alternating direction method
 //'            of multipliers algorithm (ADMM). Default is 10.
 //' @param scale whether or not scale the design matrix. Default is \code{true}.
@@ -62,10 +60,44 @@ using namespace arma;
 //'               
 //' @seealso \code{\link{cv.smog}}, \code{\link{smog.default}}, \code{\link{smog.formula}}, 
 //'          \code{\link{predict.smog}}, \code{\link{plot.smog}}.
-//' @keywords internal
 //' 
-//' @author Chong Ma, \email{chong.ma@@yale.edu}.
+//' @author Chong Ma, \email{chongma8903@@gmail.com}.
 //' @references \insertRef{ma2019structural}{smog}
+//' 
+//' @return A list of 
+//'         \item{coefficients}{A data frame of the variable name and the estimated coefficients}
+//'         \item{llikelihood}{The log likelihood value based on the ultimate estimated coefficients}
+//'         \item{loglike}{The sequence of log likelihood values since the algorithm starts}
+//'         \item{PrimalError}{The sequence of primal errors in the ADMM algorithm}
+//'         \item{DualError}{The sequence of dual errors in the ADMM algorithm}
+//'         \item{converge}{The integer of the iteration when the convergence occurs}
+//' 
+//' @examples 
+//' 
+//' set.seed(2018) 
+//' # generate design matrix x
+//' n=50;p=100
+//' s=10
+//' x=matrix(0,n,1+2*p)
+//' x[,1]=sample(c(0,1),n,replace = TRUE)
+//' x[,seq(2,1+2*p,2)]=matrix(rnorm(n*p),n,p)
+//' x[,seq(3,1+2*p,2)]=x[,seq(2,1+2*p,2)]*x[,1]
+//' 
+//' g=c(p+1,rep(1:p,rep(2,p)))  # groups 
+//' v=c(0,rep(1,2*p))           # penalization status
+//' 
+//' # generate beta
+//' beta=c(rnorm(13,0,2),rep(0,ncol(x)-13))
+//' beta[c(2,4,7,9)]=0
+//' 
+//' # generate y
+//' data1=x%*%beta
+//' noise1=rnorm(n)
+//' snr1=as.numeric(sqrt(var(data1)/(s*var(noise1))))
+//' y1=data1+snr1*noise1
+//' lambda = c(8,0,8)
+//' hierarchy = 1
+//' gfit1 = glog(y1,x,g,v,lambda,hierarchy,family = "gaussian")
 //' 
 //[[Rcpp::export]]
 Rcpp::List glog(const arma::mat & y, 

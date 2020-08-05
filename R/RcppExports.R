@@ -3,7 +3,7 @@
 
 #' Generalized linear model constraint on hierarchical structure
 #' by using overlapped group penalty
-#'   
+#' 
 #' @param y response variable, in the format of matrix. When family is 
 #'          ``gaussian'' or ``binomial'', \code{y} ought to
 #'          be a matrix of n by 1 for the observations; when family
@@ -29,8 +29,6 @@
 #'               family is ``gaussian''; for multinomial or binary response
 #'               variable, family is ``binomial''; for survival response
 #'               variable, family is ``coxph'', respectively.
-#' @param subset an optional vector specifying a subset of observations to be
-#'               used in the model fitting. Default is \code{NULL}.
 #' @param rho the penalty parameter used in the alternating direction method
 #'            of multipliers algorithm (ADMM). Default is 10.
 #' @param scale whether or not scale the design matrix. Default is \code{true}.
@@ -47,36 +45,86 @@
 #'               
 #' @seealso \code{\link{cv.smog}}, \code{\link{smog.default}}, \code{\link{smog.formula}}, 
 #'          \code{\link{predict.smog}}, \code{\link{plot.smog}}.
-#' @keywords internal
 #' 
-#' @author Chong Ma, \email{chong.ma@@yale.edu}.
+#' @author Chong Ma, \email{chongma8903@@gmail.com}.
 #' @references \insertRef{ma2019structural}{smog}
+#' 
+#' @return A list of 
+#'         \item{coefficients}{A data frame of the variable name and the estimated coefficients}
+#'         \item{llikelihood}{The log likelihood value based on the ultimate estimated coefficients}
+#'         \item{loglike}{The sequence of log likelihood values since the algorithm starts}
+#'         \item{PrimalError}{The sequence of primal errors in the ADMM algorithm}
+#'         \item{DualError}{The sequence of dual errors in the ADMM algorithm}
+#'         \item{converge}{The integer of the iteration when the convergence occurs}
+#' 
+#' @examples 
+#' 
+#' set.seed(2018) 
+#' # generate design matrix x
+#' n=50;p=100
+#' s=10
+#' x=matrix(0,n,1+2*p)
+#' x[,1]=sample(c(0,1),n,replace = TRUE)
+#' x[,seq(2,1+2*p,2)]=matrix(rnorm(n*p),n,p)
+#' x[,seq(3,1+2*p,2)]=x[,seq(2,1+2*p,2)]*x[,1]
+#' 
+#' g=c(p+1,rep(1:p,rep(2,p)))  # groups 
+#' v=c(0,rep(1,2*p))           # penalization status
+#' 
+#' # generate beta
+#' beta=c(rnorm(13,0,2),rep(0,ncol(x)-13))
+#' beta[c(2,4,7,9)]=0
+#' 
+#' # generate y
+#' data1=x%*%beta
+#' noise1=rnorm(n)
+#' snr1=as.numeric(sqrt(var(data1)/(s*var(noise1))))
+#' y1=data1+snr1*noise1
+#' lambda = c(8,0,8)
+#' hierarchy = 1
+#' gfit1 = glog(y1,x,g,v,lambda,hierarchy,family = "gaussian")
 #' 
 glog <- function(y, x, g, v, lambda, hierarchy, family = "gaussian", rho = 10, scale = TRUE, eabs = 1e-3, erel = 1e-3, LL = 1, eta = 1.25, maxitr = 1000L) {
     .Call('_smog_glog', PACKAGE = 'smog', y, x, g, v, lambda, hierarchy, family, rho, scale, eabs, erel, LL, eta, maxitr)
 }
 
-#' proximal operator on L1 penalty
+#' L1 proximal operator 
 #' 
 #' @param x numeric value.
 #' @param lambda numeric value for the L1 penalty parameter.
-#' @keywords internal
+#' 
+#' @author Chong Ma, \email{chongma8903@@gmail.com}.
+#' @references \insertRef{ma2019structural}{smog}
+#' 
+#' @return A numeric value soft-thresholded by \eqn{\lambda}, 
+#'         which is \eqn{sign(x)(|x|-\lambda)_{+}}.
+#' 
+#' @examples 
+#' proxL1(2.0,0.5)
 #' 
 proxL1 <- function(x, lambda) {
     .Call('_smog_proxL1', PACKAGE = 'smog', x, lambda)
 }
 
-#' proximal operator on L2 penalty
+#' L2 proximal operator
 #' 
-#' @param x A numeric vector.
+#' @param x A vector of p numerical values.
 #' @param lambda numeric value for the L2 penalty parameter.
-#' @keywords internal
+#' 
+#' @author Chong Ma, \email{chongma8903@@gmail.com}.
+#' @references \insertRef{ma2019structural}{smog}
+#' 
+#' @return A numeric vector soft-thresholded by \eqn{\lambda} as a group, 
+#'         which is \eqn{(1-\frac{\lambda \sqrt{p}}{\sqrt{x_1^2+\cdots+x_p^2}})_{+}\bm{x}}.
+#' 
+#' @examples
+#' proxL2(rnorm(6,2,1),0.5)
 #' 
 proxL2 <- function(x, lambda) {
     .Call('_smog_proxL2', PACKAGE = 'smog', x, lambda)
 }
 
-#' proximal operator on the composite L2, L2-Square, and L1 penalties
+#' Composite proximal operator based on L2, L2-Square, and L1 penalties
 #' 
 #' @param x A numeric vector of two.
 #' @param lambda a vector of three penalty parameters. \eqn{\lambda_1} and 
@@ -93,9 +141,14 @@ proxL2 <- function(x, lambda) {
 #' @seealso \code{\link{cv.smog}}, \code{\link{smog.default}}, \code{\link{smog.formula}}, 
 #'          \code{\link{predict.smog}}, \code{\link{plot.smog}}.
 #' 
-#' @author Chong Ma, \email{chong.ma@@yale.edu}.
+#' @author Chong Ma, \email{chongma8903@@gmail.com}.
 #' @references \insertRef{ma2019structural}{smog}
 #' 
+#' @return A two-dimensional numerical vector, soft-thresholded based on a composition of 
+#'         \eqn{\lambda_1}, \eqn{\lambda_2}, and \eqn{\lambda_3}.
+#'         
+#' @examples
+#' prox(x = rnorm(6,2,1), lambda = c(0.5,0.3,0.1), hierarchy = 0, d = c(1,1,2,2,3,3))
 #' 
 prox <- function(x, lambda, hierarchy, d) {
     .Call('_smog_prox', PACKAGE = 'smog', x, lambda, hierarchy, d)
@@ -120,8 +173,14 @@ prox <- function(x, lambda, hierarchy, d) {
 #' @seealso \code{\link{cv.smog}}, \code{\link{smog.default}}, \code{\link{smog.formula}}, 
 #'          \code{\link{predict.smog}}, \code{\link{plot.smog}}.
 #' 
-#' @author Chong Ma, \email{chong.ma@@yale.edu}.
+#' @author Chong Ma, \email{chongma8903@@gmail.com}.
 #' @references \insertRef{ma2019structural}{smog}
+#' 
+#' @return A numeric value of the penalty function based on the composition of L2, L2-Square,
+#'         and L2 penalties. 
+#'         
+#' @examples 
+#' penalty(x = rnorm(6,2,1), lambda = c(0.5,0.3,0.1), hierarchy = 0, d = c(1,1,2,2,3,3))        
 #' 
 penalty <- function(x, lambda, hierarchy, d) {
     .Call('_smog_penalty', PACKAGE = 'smog', x, lambda, hierarchy, d)

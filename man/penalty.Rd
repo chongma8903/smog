@@ -24,8 +24,16 @@ See \code{\link{smog}}.}
 
 \item{d}{indices for overlapped variables in x.}
 }
+\value{
+A numeric value of the penalty function based on the composition of L2, L2-Square,
+        and L2 penalties.
+}
 \description{
 Penalty function on the composite L2, L2-Square, and L1 penalties
+}
+\examples{
+penalty(x = rnorm(6,2,1), lambda = c(0.5,0.3,0.1), hierarchy = 0, d = c(1,1,2,2,3,3))        
+
 }
 \references{
 \insertRef{ma2019structural}{smog}
@@ -35,5 +43,5 @@ Penalty function on the composite L2, L2-Square, and L1 penalties
          \code{\link{predict.smog}}, \code{\link{plot.smog}}.
 }
 \author{
-Chong Ma, \email{chong.ma@yale.edu}.
+Chong Ma, \email{chongma8903@gmail.com}.
 }

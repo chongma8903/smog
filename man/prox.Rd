@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{prox}
 \alias{prox}
-\title{proximal operator on the composite L2, L2-Square, and L1 penalties}
+\title{Composite proximal operator based on L2, L2-Square, and L1 penalties}
 \usage{
 prox(x, lambda, hierarchy, d)
 }
@@ -22,8 +22,16 @@ See \code{\link{smog}}.}
 
 \item{d}{indices for overlapped variables in x.}
 }
+\value{
+A two-dimensional numerical vector, soft-thresholded based on a composition of 
+        \eqn{\lambda_1}, \eqn{\lambda_2}, and \eqn{\lambda_3}.
+}
 \description{
-proximal operator on the composite L2, L2-Square, and L1 penalties
+Composite proximal operator based on L2, L2-Square, and L1 penalties
+}
+\examples{
+prox(x = rnorm(6,2,1), lambda = c(0.5,0.3,0.1), hierarchy = 0, d = c(1,1,2,2,3,3))
+
 }
 \references{
 \insertRef{ma2019structural}{smog}
@@ -33,5 +41,5 @@ proximal operator on the composite L2, L2-Square, and L1 penalties
          \code{\link{predict.smog}}, \code{\link{plot.smog}}.
 }
 \author{
-Chong Ma, \email{chong.ma@yale.edu}.
+Chong Ma, \email{chongma8903@gmail.com}.
 }

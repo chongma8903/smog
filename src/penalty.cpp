@@ -7,11 +7,19 @@
 using namespace Rcpp;
 using namespace arma;
 
-//' proximal operator on L1 penalty
+//' L1 proximal operator 
 //' 
 //' @param x numeric value.
 //' @param lambda numeric value for the L1 penalty parameter.
-//' @keywords internal
+//' 
+//' @author Chong Ma, \email{chongma8903@@gmail.com}.
+//' @references \insertRef{ma2019structural}{smog}
+//' 
+//' @return A numeric value soft-thresholded by \eqn{\lambda}, 
+//'         which is \eqn{sign(x)(|x|-\lambda)_{+}}.
+//' 
+//' @examples 
+//' proxL1(2.0,0.5)
 //' 
 //[[Rcpp::export]]
 double proxL1(const double &x, const double &lambda){
@@ -19,11 +27,19 @@ double proxL1(const double &x, const double &lambda){
   return res;
 }
 
-//' proximal operator on L2 penalty
+//' L2 proximal operator
 //' 
-//' @param x A numeric vector.
+//' @param x A vector of p numerical values.
 //' @param lambda numeric value for the L2 penalty parameter.
-//' @keywords internal
+//' 
+//' @author Chong Ma, \email{chongma8903@@gmail.com}.
+//' @references \insertRef{ma2019structural}{smog}
+//' 
+//' @return A numeric vector soft-thresholded by \eqn{\lambda} as a group, 
+//'         which is \eqn{(1-\frac{\lambda \sqrt{p}}{\sqrt{x_1^2+\cdots+x_p^2}})_{+}\bm{x}}.
+//' 
+//' @examples
+//' proxL2(rnorm(6,2,1),0.5)
 //' 
 //[[Rcpp::export]]
 arma::vec proxL2(const arma::vec &x, const double &lambda){
@@ -35,7 +51,7 @@ arma::vec proxL2(const arma::vec &x, const double &lambda){
   }
 }
 
-//' proximal operator on the composite L2, L2-Square, and L1 penalties
+//' Composite proximal operator based on L2, L2-Square, and L1 penalties
 //' 
 //' @param x A numeric vector of two.
 //' @param lambda a vector of three penalty parameters. \eqn{\lambda_1} and 
@@ -52,9 +68,14 @@ arma::vec proxL2(const arma::vec &x, const double &lambda){
 //' @seealso \code{\link{cv.smog}}, \code{\link{smog.default}}, \code{\link{smog.formula}}, 
 //'          \code{\link{predict.smog}}, \code{\link{plot.smog}}.
 //' 
-//' @author Chong Ma, \email{chong.ma@@yale.edu}.
+//' @author Chong Ma, \email{chongma8903@@gmail.com}.
 //' @references \insertRef{ma2019structural}{smog}
 //' 
+//' @return A two-dimensional numerical vector, soft-thresholded based on a composition of 
+//'         \eqn{\lambda_1}, \eqn{\lambda_2}, and \eqn{\lambda_3}.
+//'         
+//' @examples
+//' prox(x = rnorm(6,2,1), lambda = c(0.5,0.3,0.1), hierarchy = 0, d = c(1,1,2,2,3,3))
 //' 
 //[[Rcpp::export]]
 arma::vec prox(const arma::vec &x, const arma::vec &lambda, 
@@ -108,8 +129,14 @@ arma::vec prox(const arma::vec &x, const arma::vec &lambda,
 //' @seealso \code{\link{cv.smog}}, \code{\link{smog.default}}, \code{\link{smog.formula}}, 
 //'          \code{\link{predict.smog}}, \code{\link{plot.smog}}.
 //' 
-//' @author Chong Ma, \email{chong.ma@@yale.edu}.
+//' @author Chong Ma, \email{chongma8903@@gmail.com}.
 //' @references \insertRef{ma2019structural}{smog}
+//' 
+//' @return A numeric value of the penalty function based on the composition of L2, L2-Square,
+//'         and L2 penalties. 
+//'         
+//' @examples 
+//' penalty(x = rnorm(6,2,1), lambda = c(0.5,0.3,0.1), hierarchy = 0, d = c(1,1,2,2,3,3))        
 //' 
 //[[Rcpp::export]]
 double penalty(const arma::vec &x, const arma::vec &lambda, 

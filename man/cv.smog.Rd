@@ -4,9 +4,9 @@
 \alias{cv.smog}
 \title{Cross-valiation for smog}
 \usage{
-cv.smog(x, y, g, v, label, type, family = "gaussian",
-  lambda.max = NULL, nlambda.max = 20, delta = 0.9, nfolds = 5,
-  parallel = FALSE, ncores = NULL, ...)
+cv.smog(x, y, g, v, label, type, family = "gaussian", lambda.max = NULL,
+  nlambda.max = 20, delta = 0.9, nfolds = 5, parallel = FALSE,
+  ncores = NULL, ...)
 }
 \arguments{
 \item{x}{a model matrix, or a data frame of dimensions n by p, 
@@ -118,5 +118,5 @@ cvfit=cv.smog(x,y,g,v,label,type="GCV",family="gaussian")
 \code{\link{smog.default}}, \code{\link{smog.formula}}, \code{\link{predict.smog}}, \code{\link{plot.smog}}.
 }
 \author{
-Chong Ma, \email{chong.ma@yale.edu}.
+Chong Ma, \email{chongma8903@gmail.com}.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{proxL1}
 \alias{proxL1}
-\title{proximal operator on L1 penalty}
+\title{L1 proximal operator}
 \usage{
 proxL1(x, lambda)
 }
@@ -11,7 +11,20 @@ proxL1(x, lambda)
 
 \item{lambda}{numeric value for the L1 penalty parameter.}
 }
-\description{
-proximal operator on L1 penalty
+\value{
+A numeric value soft-thresholded by \eqn{\lambda}, 
+        which is \eqn{sign(x)(|x|-\lambda)_{+}}.
 }
-\keyword{internal}
+\description{
+L1 proximal operator
+}
+\examples{
+proxL1(2.0,0.5)
+
+}
+\references{
+\insertRef{ma2019structural}{smog}
+}
+\author{
+Chong Ma, \email{chongma8903@gmail.com}.
+}

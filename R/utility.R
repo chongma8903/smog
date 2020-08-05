@@ -10,8 +10,8 @@
 #' Generalized linear model constraint on hierarchical structure
 #' by using overlapped group penalty
 #' 
-#' \code{smog} fits a linear non-penalized clinical (demographic) variables such as 
-#' age, gender, treatment, etc, and penalized phenotype biomarkers of prognostic effect (main effect)
+#' \code{smog} fits a linear non-penalized phynotype (demographic) variables such as 
+#' age, gender, treatment, etc, and penalized groups of prognostic effect (main effect)
 #' and predictive effect (interaction effect), by satisfying the hierarchy structure:
 #' if a predictive effect exists, its prognostic effect must be in the model. It can deal
 #' with continuous, binomial or multinomial, and survival response variables, underlying 
@@ -80,7 +80,7 @@
 #'                              ``binomial", the fitted.values are the probabilies
 #'                              for each class; when family is ``coxph'', 
 #'                              the fitted.values are survival probabilities.}
-#'         \item{model}{a list of estimates for the intercept, clinical effects, 
+#'         \item{model}{a list of estimates for the intercept, treatment effect, 
 #'                      and prognostic and predictive effects for the selectd
 #'                      biomarkers.}
 #'         \item{weight}{the weight of predictors resulted from the penalty funciton,
@@ -140,8 +140,7 @@
 #'          multipliers algorithm (ADMM). 
 #'          
 #'          Note that the missing values in the data are supposed to be dealt with in the 
-#'          data preprocessing, before applying the method. Not suggest using \code{smog.formula}
-#'          unless you know what you are doing!
+#'          data preprocessing, before applying the method. 
 #' @references \insertRef{ma2019structural}{smog}
 #' 
 #' @examples  
@@ -248,31 +247,14 @@ smog.default <- function(x, y, g, v, label, lambda1, lambda2, lambda3, family = 
   idx=est$coefficients$Id
   est$model$intercept=ifelse(0 %in% idx,
                              est$coefficients$Estimate[idx==0], NA)
-  
-  # selected clinical variables
-  idx0 = idx[idx %in% which(v == 0)]
-  if(length(idx0)){
-    est$model$clinical = est$coefficients %>% 
-      dplyr::filter(Id %in% idx0) %>%
-      dplyr::rename(variable = Beta) 
-  }else{
-    est$model$clinical = NA
-  }
-  
-  # selected biomarker variables
-  idx1 = idx[idx %in% which(v == 1)]
-  
-  # exclude the potential intercept
-  Idx = idx[idx != 0]
-  
+  est$model$treatment=ifelse(1 %in% idx,
+                             est$coefficients$Estimate[idx==1], NA)
   GId=estimate=elabel=NULL
-  if(length(idx1)){
-    est$model$biomarker = est$coefficients %>% 
-      dplyr::filter(Id %in% idx1) %>%
-      dplyr::bind_cols(GId = g[idx1], elabel = label[idx1]) %>%
-      dplyr::select(GId,Estimate,elabel)
-    
-    est$model$biomarker=tidyr::spread(est$model$biomarker,elabel,Estimate)
+  if(any(idx>1)){
+    est$model$biomarker=data.frame(GId=g[idx[idx>1]],
+                                   estimate=est$coefficients$Estimate[idx>1],
+                                   elabel=label[idx[idx>1]])
+    est$model$biomarker=tidyr::spread(est$model$biomarker,elabel,estimate)
     est$model$biomarker=as.data.frame(apply(est$model$biomarker,1:2,
                                             function(t) ifelse(is.na(t),0,t)))
 
@@ -292,7 +274,7 @@ smog.default <- function(x, y, g, v, label, lambda1, lambda2, lambda3, family = 
     colnames(est$weight)=c("prog","pred")
     
     if(!is.null(colnames(x))){
-      est$model$biomarker$marker=colnames(x)[label=="prog" & (1:ncol(x) %in% idx1)]
+      est$model$biomarker$marker=colnames(x)[label=="prog" & (1:ncol(x) %in% idx[idx>1])]
       est$model$biomarker=est$model$biomarker[,c("GId","marker","prog","pred")]
       est$weight=cbind(est$model$biomarker[,c("GId","marker")],est$weight)
     }else{
@@ -300,11 +282,11 @@ smog.default <- function(x, y, g, v, label, lambda1, lambda2, lambda3, family = 
       est$weight=cbind(GId=est$model$biomarker$GId,est$weight)
     }
     
-    Weight=sapply(Idx,function(t) ifelse(t %in% idx0, 0,
-                                         est$weight[est$weight$GId==g[t],label[t]]))
+    Weight=sapply(idx[idx>=1],function(t) ifelse(t==1,0,
+                                                 est$weight[est$weight$GId==g[t],label[t]]))
     if(family == "gaussian"){
-      est$DF=sum(diag(solve(as.matrix(t(x[,Idx]))%*%as.matrix(x[,Idx])+diag(Weight))
-                      %*%as.matrix(t(x[,Idx]))%*%as.matrix(x[,Idx])))
+      est$DF=sum(diag(solve(as.matrix(t(x[,idx[idx>=1]]))%*%as.matrix(x[,idx[idx>=1]])+diag(Weight))
+                      %*%as.matrix(t(x[,idx[idx>=1]]))%*%as.matrix(x[,idx[idx>=1]])))
     }else{
       est$DF = sum(1/(1+Weight))
     }
@@ -342,7 +324,7 @@ smog.default <- function(x, y, g, v, label, lambda1, lambda2, lambda3, family = 
 #' @rdname smog.default
 #' 
 #' @seealso \code{\link{cv.smog}}, \code{\link{predict.smog}}, \code{\link{plot.smog}}.
-#' @author Chong Ma, \email{chong.ma@@yale.edu}.
+#' @author Chong Ma, \email{chongma8903@@gmail.com}.
 #'  
 #' @export
 smog.formula <- function(formula, data=list(), g, v, label, lambda1, lambda2, lambda3, ...){
@@ -427,7 +409,7 @@ smog.formula <- function(formula, data=list(), g, v, label, lambda1, lambda2, la
 #' cvfit=cv.smog(x,y,g,v,label,type="GCV",family="gaussian")
 #' 
 #' @seealso \code{\link{smog.default}}, \code{\link{smog.formula}}, \code{\link{predict.smog}}, \code{\link{plot.smog}}.
-#' @author Chong Ma, \email{chong.ma@@yale.edu}.
+#' @author Chong Ma, \email{chongma8903@@gmail.com}.
 #' 
 #' @references \insertRef{ma2019structural}{smog}
 #' 
@@ -542,7 +524,7 @@ cv.smog <- function(x, y, g, v, label, type, family = "gaussian", lambda.max = N
                                          tid1=which(ty$time >= t)
                                          ti = NULL
                                          for(ti in 0:(length(tid0)-1)){
-                                           tloglike = tloglike-log(sum(ttheta[tid1])-ti/length(tid0)*sum(ttheta[tid0]))
+                                           tloglike=tloglike-log(sum(ttheta[tid1])-ti/length(tid0)*sum(ttheta[tid0]))
                                          }
                                        }
                                       }
@@ -613,7 +595,7 @@ cv.smog <- function(x, y, g, v, label, type, family = "gaussian", lambda.max = N
 #'         probabilies. 
 #' 
 #' @seealso \code{\link{smog.default}}, \code{\link{smog.formula}}, \code{\link{cv.smog}}, \code{\link{plot.smog}}.
-#' @author Chong Ma, \email{chong.ma@@yale.edu}.
+#' @author Chong Ma, \email{chongma8903@@gmail.com}.
 #' 
 #' @references \insertRef{ma2019structural}{smog}
 #' 
@@ -677,17 +659,17 @@ predict.smog <- function(object, newdata = NULL, family = "gaussian",...){
 #' @seealso \code{\link[graphics]{par}}, \code{\link[graphics]{plot.default}}, \code{\link{predict.smog}},
 #'          \code{\link{smog.default}}, \code{\link{smog.formula}}, \code{\link{cv.smog}}.
 #'          
-#' @author Chong Ma, \email{chong.ma@@yale.edu}.
+#' @author Chong Ma, \email{chongma8903@@gmail.com}.
 #' 
 #' @references \insertRef{ma2019structural}{smog}
 #' 
 #' @export
 plot.smog <- function(x,type = "l",xlab="iteration",caption=list("primal error","dual error","log-likelihood"),...){
-  op<-graphics::par(mfrow=c(2,2),mar=c(2.1,4.1,2.1,2.1),...)
+  op<-graphics::par(mfrow=c(2,2),mar=c(2.1,4.1,2.1,2.1),no.readonly = TRUE,...)
   graphics::plot(x$PrimalError, type=type, xlab = xlab, ylab = caption[[1]],...)
   graphics::plot(x$DualError, type=type, xlab = xlab, ylab = caption[[2]],...)
   graphics::plot(x$loglike, type=type, xlab = xlab, ylab = caption[[3]],...)
-  par(op)
+  on.exit(par(op))
 }
 
 

@@ -2,16 +2,29 @@
 % Please edit documentation in R/RcppExports.R
 \name{proxL2}
 \alias{proxL2}
-\title{proximal operator on L2 penalty}
+\title{L2 proximal operator}
 \usage{
 proxL2(x, lambda)
 }
 \arguments{
-\item{x}{A numeric vector.}
+\item{x}{A vector of p numerical values.}
 
 \item{lambda}{numeric value for the L2 penalty parameter.}
 }
-\description{
-proximal operator on L2 penalty
+\value{
+A numeric vector soft-thresholded by \eqn{\lambda} as a group, 
+        which is \eqn{(1-\frac{\lambda \sqrt{p}}{\sqrt{x_1^2+\cdots+x_p^2}})_{+}\bm{x}}.
 }
-\keyword{internal}
+\description{
+L2 proximal operator
+}
+\examples{
+proxL2(rnorm(6,2,1),0.5)
+
+}
+\references{
+\insertRef{ma2019structural}{smog}
+}
+\author{
+Chong Ma, \email{chongma8903@gmail.com}.
+}
