@@ -72,11 +72,12 @@ using namespace arma;
 //'         \item{DualError}{The sequence of dual errors in the ADMM algorithm}
 //'         \item{converge}{The integer of the iteration when the convergence occurs}
 //' 
+//' 
 //' @examples 
 //' 
 //' set.seed(2018) 
 //' # generate design matrix x
-//' n=50;p=100
+//' n=100;p=20
 //' s=10
 //' x=matrix(0,n,1+2*p)
 //' x[,1]=sample(c(0,1),n,replace = TRUE)
@@ -99,6 +100,7 @@ using namespace arma;
 //' hierarchy = 1
 //' gfit1 = glog(y1,x,g,v,lambda,hierarchy,family = "gaussian")
 //' 
+//' @export
 //[[Rcpp::export]]
 Rcpp::List glog(const arma::mat & y, 
                 const arma::mat & x, 

@@ -57,6 +57,7 @@
 #'         \item{DualError}{The sequence of dual errors in the ADMM algorithm}
 #'         \item{converge}{The integer of the iteration when the convergence occurs}
 #' 
+#' 
 #' @examples 
 #' 
 #' set.seed(2018) 
@@ -84,8 +85,9 @@
 #' hierarchy = 1
 #' gfit1 = glog(y1,x,g,v,lambda,hierarchy,family = "gaussian")
 #' 
+#' @export
 glog <- function(y, x, g, v, lambda, hierarchy, family = "gaussian", rho = 10, scale = TRUE, eabs = 1e-3, erel = 1e-3, LL = 1, eta = 1.25, maxitr = 1000L) {
-    .Call('_smog_glog', PACKAGE = 'smog', y, x, g, v, lambda, hierarchy, family, rho, scale, eabs, erel, LL, eta, maxitr)
+    .Call(`_smog_glog`, y, x, g, v, lambda, hierarchy, family, rho, scale, eabs, erel, LL, eta, maxitr)
 }
 
 #' L1 proximal operator 
@@ -102,8 +104,9 @@ glog <- function(y, x, g, v, lambda, hierarchy, family = "gaussian", rho = 10, s
 #' @examples 
 #' proxL1(2.0,0.5)
 #' 
+#' @export
 proxL1 <- function(x, lambda) {
-    .Call('_smog_proxL1', PACKAGE = 'smog', x, lambda)
+    .Call(`_smog_proxL1`, x, lambda)
 }
 
 #' L2 proximal operator
@@ -120,8 +123,9 @@ proxL1 <- function(x, lambda) {
 #' @examples
 #' proxL2(rnorm(6,2,1),0.5)
 #' 
+#' @export
 proxL2 <- function(x, lambda) {
-    .Call('_smog_proxL2', PACKAGE = 'smog', x, lambda)
+    .Call(`_smog_proxL2`, x, lambda)
 }
 
 #' Composite proximal operator based on L2, L2-Square, and L1 penalties
@@ -150,8 +154,9 @@ proxL2 <- function(x, lambda) {
 #' @examples
 #' prox(x = rnorm(6,2,1), lambda = c(0.5,0.3,0.1), hierarchy = 0, d = c(1,1,2,2,3,3))
 #' 
+#' @export
 prox <- function(x, lambda, hierarchy, d) {
-    .Call('_smog_prox', PACKAGE = 'smog', x, lambda, hierarchy, d)
+    .Call(`_smog_prox`, x, lambda, hierarchy, d)
 }
 
 #' Penalty function on the composite L2, L2-Square, and L1 penalties
@@ -182,8 +187,9 @@ prox <- function(x, lambda, hierarchy, d) {
 #' @examples 
 #' penalty(x = rnorm(6,2,1), lambda = c(0.5,0.3,0.1), hierarchy = 0, d = c(1,1,2,2,3,3))        
 #' 
+#' @export
 penalty <- function(x, lambda, hierarchy, d) {
-    .Call('_smog_penalty', PACKAGE = 'smog', x, lambda, hierarchy, d)
+    .Call(`_smog_penalty`, x, lambda, hierarchy, d)
 }
 
 # Register entry points for exported C++ functions

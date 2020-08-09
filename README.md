@@ -10,7 +10,7 @@ install.packages("smog")
 
 # or install the source type package from GitHub:
 # install.packages("devtools")
-devtools::install_github("chongma1989/smog")
+devtools::install_github("chongma8903/smog")
 ```
 
 ## Features

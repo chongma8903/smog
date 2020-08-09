@@ -4,9 +4,9 @@
 \alias{sim_rct_biomarker}
 \title{Simulate a randomized clinical trial with biomarkers}
 \usage{
-sim_rct_biomarker(n = 50, p = 100, p_prog = 5, p_pred = 5, p_both = 5,
-  v_trt = 0.4, v_prog = 0.2, v_pred = 0.2, v_err = 0.2, corr = NULL,
-  family = "gaussian", ...)
+sim_rct_biomarker(n = 50, p = 100, p_prog = 5, p_pred = 5,
+  p_both = 5, v_trt = 0.4, v_prog = 0.2, v_pred = 0.2,
+  v_err = 0.2, corr = NULL, family = "gaussian", ...)
 }
 \arguments{
 \item{n}{Number of subjects.}
@@ -29,33 +29,34 @@ sim_rct_biomarker(n = 50, p = 100, p_prog = 5, p_pred = 5, p_both = 5,
 
 \item{corr}{Autocorrelation parameter between biomarkers, default is \code{NULL}.}
 
-\item{family}{The distribution family for response variable, can be ``gaussian'',
-or ``binomial''. Default is ``gaussian''.}
+\item{family}{The distribution family for response variable, can be \code{gaussian'', or }binomial''. Default is ``gaussian''.}
 
 \item{...}{further arguments passed to or from other methods.}
 }
 \value{
 A list containing several variables.
-       \item{T}{Treatment status in 1 or -1 values.}
-       \item{X}{Biomarkers.}
-       \item{W}{Hadamard product of treatment and biomarkers.}
-       \item{M}{Model matrix - binding of \code{T}, \code{X}, and \code{W}.}
-       \item{Y}{Response.}
-       \item{Y0}{Response without error.}
-       \item{tau}{Treatment effect.}
-       \item{beta}{Prognostic effects.}
-       \item{gamma}{Predictive effects.}
-       \item{theta}{All effects corresponding to \code{M}.}
+\describe{
+\item{T}{Treatment status in 1 or -1 values.}
+\item{X}{Biomarkers.}
+\item{W}{Hadamard product of treatment and biomarkers.}
+\item{M}{Model matrix - binding of \code{T}, \code{X}, and \code{W}.}
+\item{Y}{Response.}
+\item{Y0}{Response without error.}
+\item{tau}{Treatment effect.}
+\item{beta}{Prognostic effects.}
+\item{gamma}{Predictive effects.}
+\item{theta}{All effects corresponding to \code{M}.}
+}
 }
 \description{
 \code{sim_rct_biomarker} is used to simulate clinical trial data with
 specified treatment, prognostic, and predictive effect sizes.
 }
 \examples{
-sim <- sim_rct_biomarker(n = 1e5)
-var(sim$T * sim$tau)
-var(sim$X \%*\% sim$beta)
-var(sim$W \%*\% sim$gamma)
+sim <- sim_rct_biomarker(n = 1e3)
+var(as.vector(sim$T * sim$tau))
+var(as.vector(sim$X \%*\% sim$beta))
+var(as.vector(sim$W \%*\% sim$gamma))
 
 }
 \references{

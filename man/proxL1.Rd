@@ -12,8 +12,8 @@ proxL1(x, lambda)
 \item{lambda}{numeric value for the L1 penalty parameter.}
 }
 \value{
-A numeric value soft-thresholded by \eqn{\lambda}, 
-        which is \eqn{sign(x)(|x|-\lambda)_{+}}.
+A numeric value soft-thresholded by \eqn{\lambda},
+which is \eqn{sign(x)(|x|-\lambda)_{+}}.
 }
 \description{
 L1 proximal operator

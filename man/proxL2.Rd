@@ -12,8 +12,8 @@ proxL2(x, lambda)
 \item{lambda}{numeric value for the L2 penalty parameter.}
 }
 \value{
-A numeric vector soft-thresholded by \eqn{\lambda} as a group, 
-        which is \eqn{(1-\frac{\lambda \sqrt{p}}{\sqrt{x_1^2+\cdots+x_p^2}})_{+}\bm{x}}.
+A numeric vector soft-thresholded by \eqn{\lambda} as a group,
+which is \eqn{(1-\frac{\lambda \sqrt{p}}{\sqrt{x_1^2+\cdots+x_p^2}})_{+}\bm{x}}.
 }
 \description{
 L2 proximal operator

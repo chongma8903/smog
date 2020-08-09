@@ -10,13 +10,13 @@ smog(x, ...)
 \method{print}{smog}(x, ...)
 }
 \arguments{
-\item{x}{an object of class from``smog''.}
+\item{x}{an object of class from ''smog''.}
 
 \item{...}{further arguments passed to or from other methods.}
 }
 \value{
-the cofficients table of the object x of class from ``smog''.
-        See \code{\link[base]{print}}.
+the cofficients table of the object x of class from ''smog''.
+See \code{\link[base]{print}}.
 }
 \description{
 smog generic
@@ -25,7 +25,7 @@ smog generic
 \insertRef{ma2019structural}{smog}
 }
 \seealso{
-\code{\link{cv.smog}}, \code{\link{smog.default}}, \code{\link{smog.formula}}, 
-         \code{\link{predict.smog}}, \code{\link{plot.smog}}.
+\code{\link{cv.smog}}, \code{\link{smog.default}}, \code{\link{smog.formula}},
+\code{\link{predict.smog}}, \code{\link{plot.smog}}.
 }
 \keyword{internal}

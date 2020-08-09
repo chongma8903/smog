@@ -21,6 +21,7 @@ using namespace arma;
 //' @examples 
 //' proxL1(2.0,0.5)
 //' 
+//' @export
 //[[Rcpp::export]]
 double proxL1(const double &x, const double &lambda){
   double res = std::fabs(x) > lambda ? ( x > lambda ? x-lambda : x+lambda ) : 0;
@@ -36,11 +37,12 @@ double proxL1(const double &x, const double &lambda){
 //' @references \insertRef{ma2019structural}{smog}
 //' 
 //' @return A numeric vector soft-thresholded by \eqn{\lambda} as a group, 
-//'         which is \eqn{(1-\frac{\lambda \sqrt{p}}{\sqrt{x_1^2+\cdots+x_p^2}})_{+}\bm{x}}.
+//'         which is \eqn{(1-\frac{\lambda \sqrt{p}}{\sqrt{x_1^2+\cdots+x_p^2}})_{+}{x}}.
 //' 
 //' @examples
 //' proxL2(rnorm(6,2,1),0.5)
 //' 
+//' @export
 //[[Rcpp::export]]
 arma::vec proxL2(const arma::vec &x, const double &lambda){
   double thr = 1 - lambda*std::sqrt(x.n_elem)/arma::norm(x,2);
@@ -77,6 +79,7 @@ arma::vec proxL2(const arma::vec &x, const double &lambda){
 //' @examples
 //' prox(x = rnorm(6,2,1), lambda = c(0.5,0.3,0.1), hierarchy = 0, d = c(1,1,2,2,3,3))
 //' 
+//' @export
 //[[Rcpp::export]]
 arma::vec prox(const arma::vec &x, const arma::vec &lambda, 
                const int &hierarchy, const arma::uvec &d){
@@ -138,6 +141,7 @@ arma::vec prox(const arma::vec &x, const arma::vec &lambda,
 //' @examples 
 //' penalty(x = rnorm(6,2,1), lambda = c(0.5,0.3,0.1), hierarchy = 0, d = c(1,1,2,2,3,3))        
 //' 
+//' @export
 //[[Rcpp::export]]
 double penalty(const arma::vec &x, const arma::vec &lambda, 
                const int &hierarchy, const arma::uvec &d){

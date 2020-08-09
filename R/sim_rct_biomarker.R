@@ -18,6 +18,7 @@
 #' @param ... further arguments passed to or from other methods. 
 #' 
 #' @return A list containing several variables.
+#'        \describe{
 #'        \item{T}{Treatment status in 1 or -1 values.}
 #'        \item{X}{Biomarkers.}
 #'        \item{W}{Hadamard product of treatment and biomarkers.}
@@ -28,16 +29,18 @@
 #'        \item{beta}{Prognostic effects.}
 #'        \item{gamma}{Predictive effects.}
 #'        \item{theta}{All effects corresponding to \code{M}.}
+#'        }
 #' @examples
-#' sim <- sim_rct_biomarker(n = 1e5)
-#' var(sim$T * sim$tau)
-#' var(sim$X %*% sim$beta)
-#' var(sim$W %*% sim$gamma)
+#' sim <- sim_rct_biomarker(n = 1e3)
+#' var(as.vector(sim$T * sim$tau))
+#' var(as.vector(sim$X %*% sim$beta))
+#' var(as.vector(sim$W %*% sim$gamma))
 #' 
 #' @author Chong Ma \email{chong.ma@@yale.edu}, Kevin Galinsky \email{Kevin.Galinsky@@takeda.com}.
 #' 
 #' @references \insertRef{ma2019structural}{smog}
 #' 
+#' @importFrom stats rnorm
 #' @export
 sim_rct_biomarker <- function (
   n = 50, p = 100,

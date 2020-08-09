@@ -6,3 +6,6 @@
 ^\.travis\.yml$
 ^\*.tar$
 inst/examples
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

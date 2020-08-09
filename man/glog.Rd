@@ -10,14 +10,14 @@ glog(y, x, g, v, lambda, hierarchy, family = "gaussian", rho = 10,
   maxitr = 1000L)
 }
 \arguments{
-\item{y}{response variable, in the format of matrix. When family is 
-``gaussian'' or ``binomial'', \code{y} ought to
+\item{y}{response variable, in the format of matrix. When family is
+\code{gaussian'' or }binomial'', \code{y} ought to
 be a matrix of n by 1 for the observations; when family
 is ``coxph'', y represents the survival objects, that is,
 a matrix of n by 2, containing the survival time and the censoring status.
 See \code{\link[survival]{Surv}}.}
 
-\item{x}{a model matrix of dimensions n by p,in which the column represents 
+\item{x}{a model matrix of dimensions n by p,in which the column represents
 the predictor variables.}
 
 \item{g}{a numeric vector of group labels for the predictor variables.}
@@ -30,16 +30,15 @@ penalization and 0 for not penalization.}
 squared L2 norm, and L1 norm, respectively.}
 
 \item{hierarchy}{a factor value in levels 0, 1, 2, which represent different
-hierarchical structure within groups, respectively. 
-When \code{hierarchy=0}, \eqn{\lambda_2} and \eqn{\lambda_3} are 
-forced to be zeroes; when \code{hierarchy=1}, \eqn{\lambda_2} is 
-forced to be zero; when \code{hierarchy=2}, there is no constraint 
+hierarchical structure within groups, respectively.
+When \code{hierarchy=0}, \eqn{\lambda_2} and \eqn{\lambda_3} are
+forced to be zeroes; when \code{hierarchy=1}, \eqn{\lambda_2} is
+forced to be zero; when \code{hierarchy=2}, there is no constraint
 on \eqn{\lambda}'s. See \code{\link{smog}}.}
 
 \item{family}{a description of the distribution family for the response
 variable variable. For continuous response variable,
-family is ``gaussian''; for multinomial or binary response
-variable, family is ``binomial''; for survival response
+family is \code{gaussian''; for multinomial or binary response variable, family is }binomial''; for survival response
 variable, family is ``coxph'', respectively.}
 
 \item{rho}{the penalty parameter used in the alternating direction method
@@ -63,13 +62,13 @@ continuous constant. Default is 1.25.}
 Default is 500.}
 }
 \value{
-A list of 
-        \item{coefficients}{A data frame of the variable name and the estimated coefficients}
-        \item{llikelihood}{The log likelihood value based on the ultimate estimated coefficients}
-        \item{loglike}{The sequence of log likelihood values since the algorithm starts}
-        \item{PrimalError}{The sequence of primal errors in the ADMM algorithm}
-        \item{DualError}{The sequence of dual errors in the ADMM algorithm}
-        \item{converge}{The integer of the iteration when the convergence occurs}
+A list of
+\item{coefficients}{A data frame of the variable name and the estimated coefficients}
+\item{llikelihood}{The log likelihood value based on the ultimate estimated coefficients}
+\item{loglike}{The sequence of log likelihood values since the algorithm starts}
+\item{PrimalError}{The sequence of primal errors in the ADMM algorithm}
+\item{DualError}{The sequence of dual errors in the ADMM algorithm}
+\item{converge}{The integer of the iteration when the convergence occurs}
 }
 \description{
 Generalized linear model constraint on hierarchical structure
@@ -107,8 +106,8 @@ gfit1 = glog(y1,x,g,v,lambda,hierarchy,family = "gaussian")
 \insertRef{ma2019structural}{smog}
 }
 \seealso{
-\code{\link{cv.smog}}, \code{\link{smog.default}}, \code{\link{smog.formula}}, 
-         \code{\link{predict.smog}}, \code{\link{plot.smog}}.
+\code{\link{cv.smog}}, \code{\link{smog.default}}, \code{\link{smog.formula}},
+\code{\link{predict.smog}}, \code{\link{plot.smog}}.
 }
 \author{
 Chong Ma, \email{chongma8903@gmail.com}.

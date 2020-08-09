@@ -1,0 +1,50 @@
+destination: docs
+
+template:
+  params:
+    docsearch:
+      api_key: API_KEY
+      index_name: INDEX_NAME
+    bootswatch: flatly
+    ganalytics: UA-0000000-01
+
+reference:
+  - title: Wrapper R Functions
+    desc: ~
+    contents:
+    - smog.formula
+    - smog.default
+    - predict.smog
+    - plot.smog
+    - cv.smog
+    - plot.cv.smog
+    - cv.cglasso
+    - plot.cv.cglasso
+  
+  - title: Internal C++ Functions
+    desc: ~
+    contents:
+    - glog
+    - penalty
+    - prox
+    - proxL1
+    - proxL2
+    
+  - title: Simulation Functions
+    desc: ~
+    contents:
+    - sim_rct_biomarker
+    
+navbar:
+  left:
+    - icon: fa-home
+      href: index.html
+    - icon: fa-file-code-o
+      text: Functions
+      href: reference/index.html
+    - icon: fa-pencil-square-o
+      text: Update
+      href: news/index.html
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/chongma8903/smog/
