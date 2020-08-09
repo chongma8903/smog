@@ -6,7 +6,11 @@
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
 
-There was 1 NOTE:
+There was 2 NOTE:
 
 * checking CRAN incoming feasibility ... NOTE
-Maintainer: 'Chong Ma <chong.ma@yale.edu>'
+Maintainer: 'Chong Ma <chongma8903@gmail.com>'
+
+* checking compilation flags used ... NOTE
+Compilation used the following non-portable flag(s):
+  ‘-march=ivybridge’

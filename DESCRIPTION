@@ -15,7 +15,7 @@ Description: Fits a linear non-penalized phenotype (demographic) variables
     shrinkage-thresholding algorithm and the alternating direction method of multipliers
     algorithms. The main method is built in C++, and the complementary methods are
     written in R. 
-URL: https://github.com/chongma8903/smog.git
+URL: https://github.com/chongma8903/smog
 BugReports: https://github.com/chongma8903/smog/issues
 Depends: R (>= 3.6)
 Imports: Rcpp (>= 0.12.18),

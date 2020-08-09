@@ -1,5 +1,5 @@
 # smog
-[![Travis-CI Build Status](https://travis-ci.org/chongma1989/smog.svg?branch=master)](https://travis-ci.org/chongma1989/smog)
+[![Travis-CI Build Status](https://travis-ci.com/chongma8903/smog.svg?branch=master)](https://travis-ci.com/github/chongma8903/smog)
 
 Structural Modeling by using Overlapped Group Penalty
 
