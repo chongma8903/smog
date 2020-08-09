@@ -77,7 +77,7 @@ still honors the hierarchy structure, but also leverage the multicolliearity pro
 
 # generate design matrix x
 set.seed(2018)
-n=100;p=20
+n=50;p=20
 s=10
 x=matrix(0,n,1+2*p)
 x[,1]=sample(c(0,1),n,replace = TRUE)
@@ -98,7 +98,7 @@ noise=rnorm(n)
 snr=as.numeric(sqrt(var(data)/(s*var(noise))))
 y=data+snr*noise
 
-cvfit=cv.cglasso(x,y,g,v,label,family="gaussian")
+cvfit=cv.cglasso(x,y,g,v,label,family="gaussian",nlambda.max = 20)
 
 }
 \references{

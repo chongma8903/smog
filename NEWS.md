@@ -7,7 +7,7 @@
 
 # smog 2.0
 
-* First version published in [CRAN](https://cran.r-project.org/web/packages/smog/index.html).
+* First version published in [CRAN](https://cran.r-project.org/package=smog).
 
 
 # smog 1.0 

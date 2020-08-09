@@ -19,7 +19,7 @@
 #' 
 #' # generate design matrix x
 #' set.seed(2018)
-#' n=100;p=20
+#' n=50;p=20
 #' s=10
 #' x=matrix(0,n,1+2*p)
 #' x[,1]=sample(c(0,1),n,replace = TRUE)
@@ -40,7 +40,7 @@
 #' snr=as.numeric(sqrt(var(data)/(s*var(noise))))
 #' y=data+snr*noise
 #' 
-#' cvfit=cv.cglasso(x,y,g,v,label,family="gaussian")
+#' cvfit=cv.cglasso(x,y,g,v,label,family="gaussian",nlambda.max = 20)
 #' 
 #' @seealso \code{\link{smog.default}}, \code{\link{smog.formula}}, [cv.smog]
 #' @author Chong Ma, \email{chongma8903@@gmail.com}.
@@ -187,7 +187,7 @@ cv.cglasso <- function(x, y, g, v, label, family = "gaussian", lambda.max = NULL
 #' 
 #' # generate design matrix x
 #' set.seed(2018)
-#' n=100;p=20
+#' n=50;p=20
 #' s=10
 #' x=matrix(0,n,1+2*p)
 #' x[,1]=sample(c(0,1),n,replace = TRUE)
@@ -208,7 +208,7 @@ cv.cglasso <- function(x, y, g, v, label, family = "gaussian", lambda.max = NULL
 #' snr=as.numeric(sqrt(var(data)/(s*var(noise))))
 #' y=data+snr*noise
 #' 
-#' cvfit=cv.cglasso(x,y,g,v,label,type = "AIC",family="gaussian")
+#' cvfit=cv.cglasso(x,y,g,v,label,family="gaussian", nlambda.max = 20)
 #' plot(cvfit)
 #' 
 #' @export

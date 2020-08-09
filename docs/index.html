@@ -128,22 +128,37 @@
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p>Create a new S3 class of <code>smog</code>, and the kernal function <code>smog.default</code> (or <code>smog.formula</code>) returns an object of the S3 class <code>smog</code>.</p>
+<p>Create a new S3 class of <code>smog</code>, and the kernal function <code>smog.default</code> (or <code>smog.formula</code>) returns an object of the S3 class <code>smog</code>. The kernel functions include:</p>
 <ul>
 <li>
-<code>smog.default</code> input the data and parameters to yield a model of the class <code>smog</code>.</li>
+<code>smog.default</code>: input the data and parameters to yield a model of the class <code>smog</code>.</li>
 <li>
-<code>smog.formula</code> can accept <code>formula</code> to fit the model for the data.</li>
+<code>smog.formula</code>: can accept <code>formula</code> to fit the model for the data.</li>
 <li>
-<code>predict.smog</code> produces the predicted response values for new data, provided a fitted model.</li>
+<code>predict.smog</code>: produces the predicted response values for new data, provided a fitted model.</li>
 <li>
-<code>cv.smog</code> provides cross-validation analysis based on the data.<br>
+<code>cv.smog</code>: provides cross-validation analysis based on the data.<br>
 </li>
 <li>
-<code>plot.smog</code> displays a panel of three plots to reflect the convergence performance in the algorithm.</li>
-<li>
-<code>print.smog</code> outputs the coefficients table for the fitted model.</li>
+<code>cv.cglasso</code>: cross-validation for conditional group lasso approach</li>
 </ul>
+</div>
+<div id="examples" class="section level2">
+<h2 class="hasAnchor">
+<a href="#examples" class="anchor"></a>Examples</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">sim =<span class="st"> </span><span class="kw"><a href="reference/sim_rct_biomarker.html">sim_rct_biomarker</a></span>(<span class="dt">n =</span> <span class="dv">100</span>, <span class="dt">p =</span> <span class="dv">20</span>, <span class="dt">p_prog =</span> <span class="dv">2</span>, <span class="dt">p_pred =</span> <span class="dv">2</span>, <span class="dt">p_both =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">y =<span class="st"> </span>sim<span class="op">$</span>Y</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">x =<span class="st"> </span>sim<span class="op">$</span>M</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">d =<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">g =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(d<span class="op">+</span><span class="dv">1</span>, <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">1</span><span class="op">:</span>d,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">v =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">1</span>,<span class="dv">2</span><span class="op">*</span>d))</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">label =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"trt"</span>, <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"prog"</span>,<span class="st">"pred"</span>), <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(d,d)))</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">sfit1 =<span class="st"> </span><span class="kw"><a href="reference/cv.smog.html">cv.smog</a></span>(x,y,g,v,label,<span class="dt">family =</span> <span class="st">"gaussian"</span>, <span class="dt">type =</span> <span class="st">"AIC"</span>)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(sfit1)</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">sfit2 =<span class="st"> </span><span class="kw"><a href="reference/cv.cglasso.html">cv.cglasso</a></span>(x,y,g,v,label,<span class="dt">family =</span> <span class="st">"gaussian"</span>, <span class="dt">nlambda.max =</span> <span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(sfit2)</a></code></pre></div>
 </div>
 </div>
   </div>
