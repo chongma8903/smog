@@ -259,7 +259,7 @@ cv.smog <- function(x, y, g, v, label, type = "nloglike", family = "gaussian", l
 
 #' plot method for objects of `cv.smog` class
 #' 
-#' Yield a search path for optimal group penalty \eqn{G-\lambda} and \eqn{I-\lambda} using
+#' Yield a search path for optimal tuning parameters \eqn{\lambda_G} and \eqn{\lambda_I} using
 #' the mean-squared errors from the cross-validations. 
 #' 
 #' @param x An fitted object in "cv.smog" class.

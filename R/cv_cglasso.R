@@ -154,7 +154,7 @@ cv.cglasso <- function(x, y, g, v, label, family = "gaussian", lambda.max = NULL
   cv_sd = apply(cv_res, 1, sd)
   wh_min = which.min(cv_mean)
   lambda.min = lambda[wh_min]
-  lambda.1se = tryCatch(min(lambda[cv_mean >= cv_mean[wh_min] + cv_sd[wh_min]]),
+  lambda.1se = tryCatch(lambda[which(cv_mean == min(cv_mean[cv_mean >= cv_mean[wh_min] + cv_sd[wh_min]]))],
                         warning = function(w) NA,
                         error = function(e) NA)
   lambda.opt = max(lambda.min, lambda.1se, na.rm = TRUE)

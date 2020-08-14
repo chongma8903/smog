@@ -12,7 +12,7 @@
 \item{...}{Other graphical parameters to ggplot2.}
 }
 \description{
-Yield a search path for optimal group penalty \eqn{G-\lambda} and \eqn{I-\lambda} using
+Yield a search path for optimal tuning parameters \eqn{\lambda_G} and \eqn{\lambda_I} using
 the mean-squared errors from the cross-validations.
 }
 \details{

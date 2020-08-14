@@ -1,7 +1,7 @@
 Package: smog
 Type: Package
 Title: Structural Modeling by using Overlapped Group Penalty
-Version: 2.1.0
+Version: 2.2.0
 Date: 2020-08-01
 Authors@R: c(person("Chong", "Ma", email = "chongma8903@gmail.com", role = c("aut","cre")),
              person("Kevin", "Galinsky", email = "Kevin.Galinsky@takeda.com", rol = "ctb"))
