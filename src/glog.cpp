@@ -147,8 +147,7 @@ Rcpp::List glog(const arma::mat & y,
     arma::uvec upg = ug(arma::find(ug>0));
     
     std::vector<double> llike;
-    arma::uvec d; 
-    d << 1;
+    arma::uvec d({ 1 }); 
     int itr = 0;
     do{
       double lpenalty = 0.0;
@@ -249,8 +248,7 @@ Rcpp::List glog(const arma::mat & y,
     
     std::vector<double> llike;
     
-    arma::uvec d; 
-    d << 1;
+    arma::uvec d({ 1 }); 
     int itr=0;
     do{
       // Majorization-Minization step for beta (use FISTA)
@@ -283,7 +281,7 @@ Rcpp::List glog(const arma::mat & y,
       // ADMM: update the dual variable -- Z
       arma::uvec uk;
       for(int k = 0; k<K-1; ++k){
-        uk << k;
+        uk = { k };
         new_Z(idx0,uk) = new_beta(idx0,uk) + U(idx0,uk);
         
         arma::uvec idx1;
@@ -317,7 +315,7 @@ Rcpp::List glog(const arma::mat & y,
     
     arma::uvec uk;
     for(int k = 0; k<K-1; ++k){
-      uk << k;
+      uk = { k };
       subindex = arma::join_cols(subindex,arma::find(arma::abs(new_Z.col(k)) > 0.0));
     }
     Beta = arma::unique(subindex);
@@ -365,8 +363,7 @@ Rcpp::List glog(const arma::mat & y,
     arma::mat grad_dic = arma::zeros<arma::mat>(p,n);    // gradient dictionary for each observation
     std::vector<double> llike;
     
-    arma::uvec d; 
-    d << 1;
+    arma::uvec d({ 1 }); 
     int itr=0;
     do{
       // Majorization-Minization step for beta (use FISTA)
